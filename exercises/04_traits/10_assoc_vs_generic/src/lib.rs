@@ -2,8 +2,26 @@
 //  to the power of `n`.
 //  The trait definition and its implementations should be enough to get
 //  the tests to compile and pass.
-//
-// Recommendation: you may be tempted to write a generic implementation to handle
+pub trait Power<T> {
+    fn power(self, n:T) -> Self;
+}
+
+impl Power<u16> for u32 {
+    fn power(self, n: u16) -> Self {
+        self.pow(n as u32)
+    }
+}
+impl Power<u32> for u32 {
+    fn power(self, n: u32) -> Self {
+        self.pow(n)
+    }
+}
+impl Power<&u32> for u32 {
+    fn power(self, n: &u32) -> u32 {
+        self.pow(*n)
+    }
+}
+// Recommendation: yos may be tempted to write a generic implementation to handle
 // all cases at once. However, this is fairly complicated and requires the use of
 // additional crates (i.e. `num-traits`).
 // Even then, it might be preferable to use a simple macro instead to avoid
