@@ -6,11 +6,8 @@ struct Ticket {
     status: String,
 }
 
-// TODO: Implement the `PartialEq` trait for `Ticket`.
-
 impl PartialEq<&Ticket> for String {
     fn eq(&self, other: &&Ticket) -> bool {
-        todo!()
     }
 }
 
