@@ -2,8 +2,32 @@
 //   When the description is invalid, instead, it should use a default description:
 //   "Description not provided".
 fn easy_ticket(title: String, description: String, status: Status) -> Ticket {
-    todo!()
+    let default_description: String = "Description not provided".to_string();
+
+    // First attempt to create a ticket with the provided inputs
+    match Ticket::new(title.clone(), description.clone(), status.clone()) {
+        Ok(ticket) => ticket,
+        Err(err) => {
+            if err.contains("Title") {
+                // Panic for title-related errors
+                panic!("{}", err);
+            } else if err.contains("Description") {
+                // Use default description for description-related errors
+                match Ticket::new(title, default_description, status) {
+                    Ok(ticket) => ticket,
+                    Err(unexpected_err) => {
+                        // This shouldn't happen, but handle it just in case
+                        panic!("Unexpected error after using default description: {}", unexpected_err);
+                    }
+                }
+            } else {
+                // Handle any other potential errors
+                panic!("Unexpected error: {}", err);
+            }
+        }
+    }
 }
+
 
 #[derive(Debug, PartialEq, Clone)]
 struct Ticket {
